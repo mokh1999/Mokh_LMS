@@ -262,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (try109 != null) {
                                       Navigator.pushReplacement(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return MainApp(companyname:widget.companyname ,accounttype:widget.accounttype ,);
+                                        return MainApp(companyname:widget.companyname ,accounttype:widget.accounttype ,username: emailcontroller.text.toString(),password: passcontroller.text.toString(),);
                                       }));
                                     }
                                   },

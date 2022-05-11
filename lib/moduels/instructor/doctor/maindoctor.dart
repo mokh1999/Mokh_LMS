@@ -72,16 +72,26 @@ class _PageTwoState extends State<PageTwo> {
   Widget build(BuildContext context) {
     return Scaffold( backgroundColor: const Color(0xff030629),
       appBar: AppBar(backgroundColor: const Color(0xff030629),title: Text(" Schedules ",style: TextStyle(color: Colors.white),),),
-      body: GridView(
+      body:GridView(
           children:  [
+            // MaterialButton(onPressed: ()async{
+            //
+            //     List<dynamic>  data =await AllSchedule().Get_All_Schedule(accounttype:widget.accounttype!,companyname:widget.companyname! ,password:widget.password! ,username:widget.username! );
+            //     Navigator.push(context, MaterialPageRoute(builder:(context){
+            //       return CourseInfo();
+            //     }));
+            //
+            // },color: Colors.white,),
+
             GestureDetector(
               onTap: (){
-                setState(()async {
-                  Map<String, dynamic>  data =await AllSchedule().Get_All_Schedule(accounttype:widget.accounttype!,companyname:widget.companyname! ,password:widget.password! ,username:widget.username! );
+                setState(() async{
+                  List<dynamic>  data =await AllSchedule().Get_All_Schedule(accounttype:widget.accounttype!,companyname:widget.companyname! ,password:widget.password! ,username:widget.username! );
                   Navigator.push(context, MaterialPageRoute(builder:(context){
                     return CourseInfo();
                   }));
                 });
+
               },
               child: Padding(
                 padding: EdgeInsets.all(5.0),
@@ -98,22 +108,6 @@ class _PageTwoState extends State<PageTwo> {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(5.0),
-            //   child: Card(
-            //     child: Center(
-            //       child: ListTile(
-            //         title: Text("Schedule Name",textAlign: TextAlign.center, ),
-            //       ),
-            //     ),
-            //     elevation: 8,
-            //     shadowColor: Colors.green,
-            //     shape: CircleBorder(side: BorderSide(width: 5, color: Colors.indigo),
-            //     ),
-            //   ),
-            // ),
-
-
 
           ],
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -121,6 +115,9 @@ class _PageTwoState extends State<PageTwo> {
               crossAxisSpacing: 50
           )
       ),
+
+
+
 
     );
   }
@@ -157,9 +154,13 @@ class _PageThreeState extends State<PageThree> {
 class MainApp extends StatefulWidget {
   String? accounttype;
   String? companyname;
+  String? username;
+  String? password;
   MainApp({
     this.accounttype,
     this.companyname,
+    this.password,
+    this.username,
   });
   @override
   _MainAppState createState() => _MainAppState();
@@ -171,9 +172,9 @@ class _MainAppState extends State<MainApp> {
   Widget getPage(int index) {
     switch (index){
       case 0:
-        return PageOne(accounttype: widget.accounttype,companyname: widget.companyname,);
+        return PageOne(accounttype: widget.accounttype,companyname: widget.companyname,username: widget.username,password: widget.password,);
       case 1:
-        return PageTwo();
+        return PageTwo(accounttype: widget.accounttype,companyname: widget.companyname,username: widget.username,password: widget.password,);
       case 2:
         return PageThree();
       default:
@@ -213,3 +214,20 @@ class _MainAppState extends State<MainApp> {
     );
   }
 }
+
+
+
+// Padding(
+//   padding: EdgeInsets.all(5.0),
+//   child: Card(
+//     child: Center(
+//       child: ListTile(
+//         title: Text("Schedule Name",textAlign: TextAlign.center, ),
+//       ),
+//     ),
+//     elevation: 8,
+//     shadowColor: Colors.green,
+//     shape: CircleBorder(side: BorderSide(width: 5, color: Colors.indigo),
+//     ),
+//   ),
+// ),
