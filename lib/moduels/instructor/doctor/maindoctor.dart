@@ -2,17 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:lms/moduels/instructor/doctor/schedule/schedulemain.dart';
 
 class MainDoctor extends StatefulWidget {
-  const MainDoctor({Key? key}) : super(key: key);
+  final  String? accounttype;
+  String? companyname;
+  String? username;
+  String? password;
+  MainDoctor({
+    Key ?key,
+    this.accounttype,
+    this.companyname,
+    this.username,
+    this.password,
+
+  }): super(key: key);
 
   @override
   State<MainDoctor> createState() => _MainDoctorState();
 }
 
 class _MainDoctorState extends State<MainDoctor> {
-
-  int bottom_navigator_bar_selected=1;
+   int bottom_navigator_bar_selected=1;
   void _Item_Navigator_Bar(int index){
-    setState(() {
+    setState(()async {
       bottom_navigator_bar_selected=index;
     });
   }

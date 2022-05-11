@@ -17,11 +17,9 @@ class _ChooseUniverstyState extends State<ChooseUniversty> {
   String dropdownvalue="Choose Company";
   @override
   Widget build(BuildContext context) {
-    AlertDialog(
+    const AlertDialog(
       title: Text("Please Choose Company To Get Start"),
-      actions: [
-        FlatButton( onPressed: () {  }, child: Text("OK"),)
-      ],
+
     );
     return Scaffold(
       backgroundColor:const Color(0xff030629),

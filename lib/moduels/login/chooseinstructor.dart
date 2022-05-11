@@ -82,7 +82,7 @@ class _ChooseInstructorState extends State<ChooseInstructor> {
                                 accounttype = 'doctor';
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return LoginScreen(accounttype, widget.companyname,widget.isstudent,widget.isparent);
+                                  return LoginScreen(accounttype: accounttype, companyname: widget.companyname,isstudent: widget.isstudent,isparent:widget.isparent);
                                 }));
                               },
                               name: 'Doctor',
@@ -93,7 +93,7 @@ class _ChooseInstructorState extends State<ChooseInstructor> {
                                 accounttype = 'assistant';
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return LoginScreen(accounttype, widget.companyname,widget.isstudent,widget.isparent);
+                                  return LoginScreen(accounttype: accounttype, companyname: widget.companyname,isstudent: widget.isstudent,isparent:widget.isparent);
                                 }));
                               },
                               name: 'Assistant',
@@ -104,7 +104,7 @@ class _ChooseInstructorState extends State<ChooseInstructor> {
                                 accounttype = 'trainer';
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return LoginScreen(accounttype, widget.companyname,widget.isstudent,widget.isparent);
+                                  return LoginScreen(accounttype: accounttype,companyname:  widget.companyname,isstudent: widget.isstudent,isparent:widget.isparent);
                                 }));
                               },
                               name: 'Trainer',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lms/layouts/chooseuniversty.dart';
 import 'package:lms/moduels/instructor/doctor/maindoctor.dart';
 import 'package:lms/services/post_gettoken.dart';
@@ -11,8 +12,13 @@ class LoginScreen extends StatefulWidget {
   String? companyname;
   bool? isstudent;
   bool? isparent;
-  LoginScreen(
-      this.accounttype, this.companyname, this.isstudent, this.isparent);
+  LoginScreen({
+    this.accounttype,
+    this.companyname,
+    this.isstudent,
+    this.isparent,
+    bool? isLogin
+  });
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -94,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: login
-                                    ? Colors.grey[500]
-                                    : Color(0xff262B58),
+                                    ? Color(0xff262B58)
+                                    : Colors.grey[400],
                               ),
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -126,8 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: login
-                                    ? Color(0xff262B58)
-                                    : Colors.grey[500],
+                                    ? Colors.grey[400]
+                                    : Color(0xff262B58) ,
                               ),
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -256,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (try109 != null) {
                                       Navigator.pushReplacement(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return MainDoctor();
+                                        return MainDoctor(username:username.text.toString() ,password: pass.text.toString(),companyname:widget.companyname ,accounttype:widget.accounttype ,);
                                       }));
                                     }
                                   },
@@ -287,6 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           type: TextInputType.emailAddress,
                           text_field: 'enter user name',
                           prefix_icon: Icons.email_outlined,
+
                         ),
                         default_textfield(
                           control_text: email,
@@ -310,6 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           control_text: department,
                           type: TextInputType.text,
                           text_field: 'enter department',
+                          prefix_icon:  Icons.account_balance
                         ),
                         Visibility(
                           visible: widget.isstudent!,
@@ -319,6 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 control_text: age,
                                 type: TextInputType.number,
                                 text_field: 'enter age',
+                                prefix_icon: Icons.perm_identity
                               ),
                               default_textfield(
                                 control_text: nationalid,
@@ -375,44 +384,80 @@ class _LoginScreenState extends State<LoginScreen> {
                                         dropdownvalue = newValue!;
                                       });
                                     },
+
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
+
                         ),
                         default_textfield(
                           control_text: pass,
-                          type: TextInputType.text,
+                          on_submit: (value) {
+                            return print(value);
+                          },
+                          type: TextInputType.emailAddress,
                           text_field: 'enter password',
-                          prefix_icon: Icons.perm_identity_rounded,
+                          prefix_icon: Icons.lock,
+                          suffix_icon: secure
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          iconbuttonfun: () {
+                            setState(() {
+                              secure = !secure;
+                            });
+                          },
+                          secure: secure,
                         ),
                         default_textfield(
                           control_text: passconfirm,
-                          type: TextInputType.text,
-                          text_field: 'enter confirme password',
-                          prefix_icon: Icons.perm_identity_rounded,
+                          on_submit: (value) {
+                            return print(value);
+                          },
+                          type: TextInputType.emailAddress,
+                          text_field: 'enter password',
+                          prefix_icon: Icons.lock,
+                          suffix_icon: secure
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          iconbuttonfun: () {
+                            setState(() {
+                              secure = !secure;
+                            });
+                          },
+                          secure: secure,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
                           child: default_button(
                             pressed: () {
-                              PostSignUp().postsignup(
-                                  username: username.text.toString(),
-                                  email: email.text.toString(),
-                                  first_name: first_name.text.toString(),
-                                  last_name: last_name.text.toString(),
-                                  department: department.text.toString(),
-                                  password: pass.text.toString(),
-                                  confirm_password: passconfirm.text.toString(),
-                                  companyname: widget.companyname.toString(),
-                                  usertype: widget.accounttype.toString(),
-                                  gender: gender.text.toString(),
-                                  age: age.text.toString(),
-                                  national_id: nationalid.text.toString(),
-                                  parent_national_id:
-                                      parent_national_id.text.toString(),
-                                  parent_email: parent_email.text.toString());
+                              if(username!="" || email != "" || first_name != "" || department != " " || pass != null ) {
+                                PostSignUp().postsignup(
+                                    username: username.text.toString(),
+                                    email: email.text.toString(),
+                                    first_name: first_name.text.toString(),
+                                    last_name: last_name.text.toString(),
+                                    department: department.text.toString(),
+                                    password: pass.text.toString(),
+                                    confirm_password: passconfirm.text
+                                        .toString(),
+                                    companyname: widget.companyname.toString(),
+                                    usertype: widget.accounttype.toString(),
+                                    gender: gender.text.toString(),
+                                    age: age.text.toString(),
+                                    national_id: nationalid.text.toString(),
+                                    parent_national_id:
+                                    parent_national_id.text.toString(),
+                                    parent_email: parent_email.text.toString());
+                              }
+                              else {
+                                Fluttertoast.showToast(
+                                  msg: "Please Fil All  Fields",
+                                  backgroundColor: Colors.red,
+                                );
+                              }
                             },
                             text: 'Submit',
                             backcolor: Color(0xff030629),
