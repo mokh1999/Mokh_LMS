@@ -69,7 +69,8 @@ class PageTwo extends StatefulWidget {
 }
 
 class _PageTwoState extends State<PageTwo> {
-  List<dynamic> ldata = ["1"] ;
+  List<dynamic> ldata = [] ;
+  List scheduleNames=[];
   void initState()  {
     super.initState();
     Future (() async {
@@ -80,6 +81,12 @@ class _PageTwoState extends State<PageTwo> {
           username: widget.username!);
      setState(() {
        ldata = data;
+       print("ldata");
+       Map<int, dynamic> map = ldata.asMap();
+       for(int i=0;i<ldata.length;i++){
+         scheduleNames.add(map[i]["instructor_schedule_name"]);
+         print(scheduleNames);
+       }
      });
 
     });
@@ -109,7 +116,7 @@ class _PageTwoState extends State<PageTwo> {
                   child: Card(
                     child: Center(
                       child: ListTile(
-                        title: Text("instructor_schedule_name",textAlign: TextAlign.center, ),
+                        title: Text(scheduleNames[index].toString(),textAlign: TextAlign.center, ),
                       ),
                     ),
                     elevation: 8,
