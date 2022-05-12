@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms/moduels/instructor/doctor/schedule/Course_Info.dart';
 import 'package:lms/services/Doctor/Get_Schedule.dart';
@@ -68,52 +69,64 @@ class PageTwo extends StatefulWidget {
 }
 
 class _PageTwoState extends State<PageTwo> {
+  List<dynamic>?  data ;
+  void initState()  {
+    super.initState();
+    Future (() async {
+     data = await AllSchedule().Get_All_Schedule(
+          accounttype: widget.accounttype!,
+          companyname: widget.companyname!,
+          password: widget.password!,
+          username: widget.username!);
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold( backgroundColor: const Color(0xff030629),
       appBar: AppBar(backgroundColor: const Color(0xff030629),title: Text(" Schedules ",style: TextStyle(color: Colors.white),),),
-      body:GridView(
-          children:  [
-            // MaterialButton(onPressed: ()async{
-            //
-            //     List<dynamic>  data =await AllSchedule().Get_All_Schedule(accounttype:widget.accounttype!,companyname:widget.companyname! ,password:widget.password! ,username:widget.username! );
-            //     Navigator.push(context, MaterialPageRoute(builder:(context){
-            //       return CourseInfo();
-            //     }));
-            //
-            // },color: Colors.white,),
+      body:GridView.count(
+        scrollDirection:Axis.vertical,
 
-            GestureDetector(
-              onTap: (){
-                setState(() async{
-                  List<dynamic>  data =await AllSchedule().Get_All_Schedule(accounttype:widget.accounttype!,companyname:widget.companyname! ,password:widget.password! ,username:widget.username! );
-                  Navigator.push(context, MaterialPageRoute(builder:(context){
-                    return CourseInfo();
-                  }));
-                });
+          crossAxisCount: 2,
+          children:
+            List.generate(2, (index){
+              return  GestureDetector(
+                onTap: (){
+                  setState(() {
+                    Navigator.push(context, MaterialPageRoute(builder:(context){
+                      return CourseInfo();
+                    }));
+                  });
 
-              },
-              child: Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Card(
-                  child: Center(
-                    child: ListTile(
-                      title: Text("Schedule Name",textAlign: TextAlign.center, ),
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Card(
+                    child: Center(
+                      child: ListTile(
+                        title: Text(data![0]["instructor_schedule_name"],textAlign: TextAlign.center, ),
+                      ),
+                    ),
+                    elevation: 8,
+                    shadowColor: Colors.green,
+                    shape: CircleBorder(side: BorderSide(width: 5, color: Colors.indigo),
                     ),
                   ),
-                  elevation: 8,
-                  shadowColor: Colors.green,
-                  shape: CircleBorder(side: BorderSide(width: 5, color: Colors.indigo),
-                  ),
                 ),
-              ),
-            ),
+              );
 
-          ],
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 50
-          )
+            })
+
+
+          // children:  [
+          //
+          //
+          // ],
+          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //     crossAxisCount: 2,
+          //     crossAxisSpacing: 50,
+          // )
       ),
 
 
@@ -231,3 +244,13 @@ class _MainAppState extends State<MainApp> {
 //     ),
 //   ),
 // ),
+
+// MaterialButton(onPressed: ()async{
+//
+//     List<dynamic>  data =await AllSchedule().Get_All_Schedule(accounttype:widget.accounttype!,companyname:widget.companyname! ,password:widget.password! ,username:widget.username! );
+//     Navigator.push(context, MaterialPageRoute(builder:(context){
+//       return CourseInfo();
+//     }));
+//
+// },color: Colors.white,),
+
