@@ -69,18 +69,22 @@ class PageTwo extends StatefulWidget {
 }
 
 class _PageTwoState extends State<PageTwo> {
-  List<dynamic>?  data ;
+  List<dynamic> ldata = ["1"] ;
   void initState()  {
     super.initState();
     Future (() async {
-     data = await AllSchedule().Get_All_Schedule(
+      List<dynamic> data = await AllSchedule().Get_All_Schedule(
           accounttype: widget.accounttype!,
           companyname: widget.companyname!,
           password: widget.password!,
           username: widget.username!);
+     setState(() {
+       ldata = data;
+     });
 
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold( backgroundColor: const Color(0xff030629),
@@ -90,7 +94,7 @@ class _PageTwoState extends State<PageTwo> {
 
           crossAxisCount: 2,
           children:
-            List.generate(2, (index){
+            List.generate(ldata.length, (index){
               return  GestureDetector(
                 onTap: (){
                   setState(() {
@@ -105,7 +109,7 @@ class _PageTwoState extends State<PageTwo> {
                   child: Card(
                     child: Center(
                       child: ListTile(
-                        title: Text(data![0]["instructor_schedule_name"],textAlign: TextAlign.center, ),
+                        title: Text("instructor_schedule_name",textAlign: TextAlign.center, ),
                       ),
                     ),
                     elevation: 8,
